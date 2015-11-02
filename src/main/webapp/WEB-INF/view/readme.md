@@ -1,0 +1,1 @@
+推荐JSP文件放到WEB-INF内部,而并非外部,因为用户无法通过浏览器地址栏直接请求放在内部的JSP,必须通过Servlet程序进行转发(forward)或重定向(redirect).
