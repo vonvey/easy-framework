@@ -1,6 +1,7 @@
 package org.easy4j.test;
 
 import org.easy4j.service.CustomerService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +22,11 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerListTest() {
+
+    }
+
+    @After
+    public void after() {
 
     }
 
