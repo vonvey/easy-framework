@@ -2,12 +2,17 @@ package org.easy4j.test;
 
 import org.easy4j.model.Customer;
 import org.easy4j.service.CustomerService;
+import org.easy4j.util.DatabaseHelper;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,15 +26,16 @@ public class CustomerServiceTest {
     }
 
     @Before
-    public void init() {
-        //TODO 初始化数据库
+    public void init() throws Exception {
+        //初始化数据库
+        DatabaseHelper.executeFile("sql/customer_init.sql");
     }
 
     @Test
     public void getCustomerListTest() throws Exception {
-        long id = 1;
-        Customer customer = customerService.getCustomer(id);
-        Assert.assertNotNull(customer);
+        List<Customer> list = customerService.getCustomerList("");
+        Assert.assertTrue(list.size() > 0);
+        Assert.assertNotNull(list);
     }
 
     @Test
@@ -37,7 +43,7 @@ public class CustomerServiceTest {
         Map<String, Object> fieldMap = new HashMap<String, Object>();
         fieldMap.put("name", "Tom");
         fieldMap.put("contact", "tom@qq.com");
-        fieldMap.put("telephont", "13333333333");
+        fieldMap.put("telephone", "13333333333");
         boolean result = customerService.createCustomer(fieldMap);
         Assert.assertTrue(result);
     }
@@ -46,7 +52,7 @@ public class CustomerServiceTest {
     public void updateCustomerTest() throws Exception {
         long id = 1;
         Map<String, Object> fieldMap = new HashMap<String, Object>();
-        fieldMap.put("telephont", "13433333333");
+        fieldMap.put("telephone", "13433333333");
         boolean result = customerService.updateCustomer(id, fieldMap);
         Assert.assertTrue(result);
     }

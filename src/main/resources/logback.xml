@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <!-- 尽量别用绝对路径，如果带参数不同容器路径解释可能不同 -->
-    <property name="LOG_HOME" value="/var/log/ccic/logback"/>
+    <property name="LOG_HOME" value="/Users/vonvey/Work/idea/logback"/>
     <!--<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{H:mm} %-5level [%logger{16}] %msg%n</pattern>

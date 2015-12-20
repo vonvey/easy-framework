@@ -6,6 +6,6 @@ import javax.servlet.http.HttpServlet;
 /**
  * Created by vonvey on 15/11/3.
  */
-@WebServlet("customer_edit")
+@WebServlet("/customer_edit")
 public class CustomerEditServlet extends HttpServlet {
 }

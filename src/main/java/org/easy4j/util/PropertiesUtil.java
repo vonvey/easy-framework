@@ -59,7 +59,7 @@ public class PropertiesUtil {
      */
     public static String getString(Properties properties, String key, String defalutValue) {
         String value = defalutValue;
-        if (properties.contains(key)) {
+        if (properties.containsKey(key)) {
             value = properties.getProperty(key);
         }
 
@@ -79,7 +79,7 @@ public class PropertiesUtil {
      */
     public static int getInt(Properties properties, String key, int defalutValue) {
         int value = defalutValue;
-        if (properties.contains(key)) {
+        if (properties.containsKey(key)) {
             value = CastUtil.castInt(properties.getProperty(key));
         }
 
@@ -98,7 +98,7 @@ public class PropertiesUtil {
      */
     public static boolean getBoolean(Properties properties, String key, boolean defalutValue) {
         boolean value = defalutValue;
-        if (properties.contains(key)) {
+        if (properties.containsKey(key)) {
             value = CastUtil.castBoolean(properties.getProperty(key));
         }
 
