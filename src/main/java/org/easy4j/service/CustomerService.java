@@ -1,21 +1,18 @@
 package org.easy4j.service;
 
+import org.easy4j.framework.annotation.Service;
 import org.easy4j.model.Customer;
 import org.easy4j.util.DatabaseHelper;
-import org.easy4j.util.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.crypto.Data;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Created by vonvey on 15/11/3.
  */
+@Service
 public class CustomerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);

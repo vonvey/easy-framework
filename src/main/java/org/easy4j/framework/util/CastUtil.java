@@ -1,4 +1,4 @@
-package org.easy4j.util;
+package org.easy4j.framework.util;
 
 /**
  * @author fengwei (ivonvey@gmail.com) //
@@ -49,6 +49,31 @@ public class CastUtil {
             }
         }
         return intValue;
+    }
+
+    /**
+     * 转为long类型
+     */
+    public static long castLong(Object obj) {
+        return castLong(obj, 0);
+    }
+
+    /**
+     * 转为long类型, 提供默认值
+     */
+    public static long castLong(Object obj, long defaultValue) {
+        long longValue = defaultValue;
+        if (obj != null) {
+            String strValue = castString(obj);
+            if (StringUtils.isNotEmpty(strValue)) {
+                try {
+                    longValue = Long.parseLong(strValue);
+                } catch (NumberFormatException e) {
+                    longValue = defaultValue;
+                }
+            }
+        }
+        return longValue;
     }
 
     /**
