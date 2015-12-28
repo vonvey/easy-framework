@@ -7,6 +7,8 @@ import org.easy4j.framework.bean.Param;
 import org.easy4j.framework.bean.View;
 import org.easy4j.model.Customer;
 import org.easy4j.service.CustomerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Controller
 public class CustomerController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
     @Inject
     private CustomerService customerService;
 
