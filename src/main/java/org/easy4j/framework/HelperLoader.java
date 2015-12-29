@@ -5,10 +5,7 @@ package org.easy4j.framework;
  * @date 15/12/27 18:36
  */
 
-import org.easy4j.framework.helper.BeanHelper;
-import org.easy4j.framework.helper.ClassHelper;
-import org.easy4j.framework.helper.ControllerHelper;
-import org.easy4j.framework.helper.IocHelper;
+import org.easy4j.framework.helper.*;
 import org.easy4j.framework.util.ClassUtil;
 
 /**
@@ -19,6 +16,7 @@ public final class HelperLoader {
         Class<?>[] classList = {
                 ClassHelper.class,
                 BeanHelper.class,
+                AopHelper.class,
                 IocHelper.class,
                 ControllerHelper.class
         };
