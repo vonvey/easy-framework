@@ -1,10 +1,11 @@
 package org.easy4j.framework.helper;
 
 import org.easy4j.framework.annotation.Aspect;
+import org.easy4j.framework.annotation.Service;
 import org.easy4j.framework.proxy.AspectProxy;
 import org.easy4j.framework.proxy.Proxy;
-import org.easy4j.framework.proxy.ProxyChain;
 import org.easy4j.framework.proxy.ProxyManager;
+import org.easy4j.framework.proxy.TransactionProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,7 @@ public final class AopHelper {
 
     /**
      * 获取所有Aspect注解中设置的注解类
-     *  @Aspect(@Controller)
+     *  @Aspect(value=Controller.class)
      */
     private static Set<Class<?>> createTargetClassSet(Aspect aspect) throws Throwable {
         Set<Class<?>> classSet = new HashSet<>();
@@ -55,6 +56,12 @@ public final class AopHelper {
 
     private static Map<Class<?>, Set<Class<?>>> createProxyMap() throws Throwable {
         Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<Class<?>, Set<Class<?>>>();
+        addAspectProxy(proxyMap);
+        addTransactionProxy(proxyMap);
+        return proxyMap;
+    }
+
+    private static void addAspectProxy(Map<Class<?>, Set<Class<?>>> proxyMap) throws Throwable {
         Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuperClass(AspectProxy.class);
 
         for (Class<?> proxyClass : proxyClassSet) {
@@ -62,8 +69,12 @@ public final class AopHelper {
             Set<Class<?>> targetClassSet = createTargetClassSet(aspect);
             proxyMap.put(proxyClass, targetClassSet);
         }
+    }
 
-        return proxyMap;
+    private static void addTransactionProxy (Map<Class<?>, Set<Class<?>>> proxyMap){
+        Set<Class<?>> serviceClassSet = ClassHelper.getClassSetByAnnotation(Service.class);
+
+        proxyMap.put(TransactionProxy.class, serviceClassSet);
     }
 
     private static Map<Class<?>, List<Proxy>> createTargetMap(Map<Class<?>, Set<Class<?>>> proxyMap) throws Throwable {

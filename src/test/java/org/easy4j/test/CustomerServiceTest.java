@@ -2,15 +2,12 @@ package org.easy4j.test;
 
 import org.easy4j.model.Customer;
 import org.easy4j.service.CustomerService;
-import org.easy4j.util.DatabaseHelper;
+import org.easy4j.framework.helper.DatabaseHelper;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

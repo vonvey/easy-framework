@@ -1,8 +1,9 @@
 package org.easy4j.service;
 
 import org.easy4j.framework.annotation.Service;
+import org.easy4j.framework.annotation.Transaction;
 import org.easy4j.model.Customer;
-import org.easy4j.util.DatabaseHelper;
+import org.easy4j.framework.helper.DatabaseHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +28,17 @@ public class CustomerService {
         return DatabaseHelper.queryEntry(Customer.class, sql);
     }
 
+    @Transaction
     public boolean createCustomer(Map<String, Object> fieldMap) {
         return DatabaseHelper.insertEntity(Customer.class, fieldMap);
     }
 
+    @Transaction
     public boolean updateCustomer(long id, Map<String, Object> fieldMap) {
         return DatabaseHelper.updateEntity(Customer.class, id, fieldMap);
     }
 
+    @Transaction
     public boolean deleteCustomer(long id) {
         return DatabaseHelper.deleteEntity(Customer.class, id);
     }

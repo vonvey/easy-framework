@@ -11,7 +11,7 @@ import java.util.List;
 import net.sf.cglib.proxy.MethodProxy;
 
 /**
- * 代理链
+ * 代理链, 代理链
  */
 public class ProxyChain {
     private final Class<?> targetClass;

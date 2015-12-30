@@ -1,4 +1,4 @@
-package org.easy4j.util;
+package org.easy4j.framework.helper;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
@@ -222,6 +222,55 @@ public class DatabaseHelper {
         } catch (Exception e) {
             LOGGER.error("execute sql file failure", e);
             throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 开启事务
+     */
+
+    public static void beginTransaction() {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                conn.setAutoCommit(false);
+            } catch (Exception e) {
+                LOGGER.error("begin transaction failure", e);
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * 提交事务
+     */
+
+    public static void commitTransaction() {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                conn.commit();
+                conn.close();
+            } catch (SQLException e) {
+                LOGGER.error("commit transaction failure", e);
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    /**
+     * 回滚事务
+     */
+    public static void rollbackTransaction() {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                conn.rollback();
+                conn.close();
+            } catch (SQLException e) {
+                LOGGER.error("rollback transaction failure", e);
+                throw new RuntimeException(e);
+            }
         }
     }
 }
