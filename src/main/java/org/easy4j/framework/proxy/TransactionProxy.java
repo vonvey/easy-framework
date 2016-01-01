@@ -21,7 +21,7 @@ public class TransactionProxy implements Proxy {
     /**
      * ThreadLocal
      */
-    private static final ThreadLocal<Boolean> FLAG_HODER = new ThreadLocal<Boolean>(){
+    private static final ThreadLocal<Boolean> FLAG_HOLDER = new ThreadLocal<Boolean>(){
         @Override
         protected Boolean initialValue() {
             return false;
@@ -31,10 +31,10 @@ public class TransactionProxy implements Proxy {
     @Override
     public Object doProxy(ProxyChain proxyChain) throws Throwable {
         Object result;
-        Boolean flag = FLAG_HODER.get();
+        Boolean flag = FLAG_HOLDER.get();
         Method method = proxyChain.getTargetMethod();
         if (!flag && method.isAnnotationPresent(Transaction.class)) {
-            FLAG_HODER.set(true);
+            FLAG_HOLDER.set(true);
             try {
                 DatabaseHelper.beginTransaction();
                 LOGGER.debug("begin transaction");
@@ -46,6 +46,7 @@ public class TransactionProxy implements Proxy {
                 DatabaseHelper.rollbackTransaction();
                 throw e;
             }
+
         } else {
             result = proxyChain.doProxyChain();
         }

@@ -83,10 +83,18 @@ public class DispatcherServlet extends HttpServlet {
                 }
             }
 
-            Param param = new Param(paramMap);
-            //调用Action方法
             Method actionMethod = handler.getActionMethod();
-            Object result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
+            Object result;
+            //判断paramMap是否为空，如果为空不传paramMap方法
+            if (paramMap.isEmpty()) {
+                result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
+
+            } else {
+                Param param = new Param(paramMap);
+                //调用Action方法
+                result = ReflectionUtil.invokeMethod(controllerBean, actionMethod, param);
+            }
+
             //处理Action方法的返回值
             if (result instanceof View) {
                 //返回JSP页面
