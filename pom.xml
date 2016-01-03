@@ -29,6 +29,7 @@
         <apache.commons.dbutils.version>1.6</apache.commons.dbutils.version>
         <apache.commons.dbcp2.version>2.1.1</apache.commons.dbcp2.version>
         <cglib.version>3.2.0</cglib.version>
+        <shiro.version>1.2.4</shiro.version>
 
         <spring.version>4.1.1.RELEASE</spring.version>
     </properties>
@@ -125,6 +126,20 @@
             <artifactId>cglib</artifactId>
             <version>${cglib.version}</version>
         </dependency>
+
+        <!-- 安全框架 Shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+
         <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
