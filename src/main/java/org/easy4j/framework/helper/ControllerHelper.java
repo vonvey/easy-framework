@@ -6,6 +6,7 @@ package org.easy4j.framework.helper;
  */
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.shiro.util.AntPathMatcher;
 import org.easy4j.framework.annotation.Action;
 import org.easy4j.framework.bean.Handler;
 import org.easy4j.framework.bean.Request;
@@ -43,7 +44,9 @@ public final class ControllerHelper {
                             if (action != null) {
                                 String mapping = action.value();
                                 //验证映射规则
-                                if (mapping.matches("\\w+:/\\w*")) {
+
+                                //正则表达式
+                                //if (mapping.matches("\\w+:/\\w*")) {
                                     String[] array = mapping.split(":");
                                     if (ArrayUtils.isNotEmpty(array) && array.length == 2) {
                                         //构造Request和Handler
@@ -52,7 +55,7 @@ public final class ControllerHelper {
                                         //初始化Action Map
                                         ACTION_MAP.put(request, handler);
                                     }
-                                }
+                                //}
                             }
                         }
                     }
@@ -65,6 +68,22 @@ public final class ControllerHelper {
      * 获取Handler
      */
     public static Handler getHandler(String requestMethod, String requestPath) {
-        return ACTION_MAP.get(new Request(requestMethod, requestPath));
+        //先直接获取
+        Handler handler = ACTION_MAP.get(new Request(requestMethod, requestPath));
+        AntPathMatcher matcher = new AntPathMatcher();
+        //如果没有
+        if (handler == null) {
+            for (Map.Entry<Request, Handler> entry : ACTION_MAP.entrySet()) {
+                Request request = entry.getKey();
+                if (request.getRequestMethod().equals(requestMethod)) {
+                    if (matcher.match(request.getRequestPath(), requestPath)) {
+                        handler = entry.getValue();
+                        break;
+                    }
+                }
+            }
+        }
+
+        return handler;
     }
 }

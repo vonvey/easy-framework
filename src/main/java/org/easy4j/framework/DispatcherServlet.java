@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,7 +90,7 @@ public class DispatcherServlet extends HttpServlet {
                 Method actionMethod = handler.getActionMethod();
                 Object result;
                 //判断paramMap是否为空，如果为空不传paramMap方法
-                if (paramMap.isEmpty()) {
+                if (paramMap.isEmpty() && actionMethod.getParameterCount() == 0) {
                     result = ReflectionUtil.invokeMethod(controllerBean, actionMethod);
 
                 } else {
@@ -128,6 +129,9 @@ public class DispatcherServlet extends HttpServlet {
                         printWriter.close();
                     }
                 }
+            } else {
+                //handler not found
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } finally {
             ServletHelper.destroy();

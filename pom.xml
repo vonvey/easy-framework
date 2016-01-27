@@ -127,7 +127,7 @@
             <version>${cglib.version}</version>
         </dependency>
 
-        <!-- 安全框架 Shiro -->
+        <!-- 简单的安全框架 Shiro -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
@@ -138,6 +138,20 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
             <version>${shiro.version}</version>
+        </dependency>
+
+        <!-- mina NIO -->
+        <dependency>
+            <groupId>org.apache.mina</groupId>
+            <artifactId>mina-core</artifactId>
+            <version>3.0.0-M2</version>
+        </dependency>
+
+        <!-- netty all -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.0.33.Final</version>
         </dependency>
 
         <!-- JUnit -->

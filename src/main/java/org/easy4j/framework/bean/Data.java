@@ -7,6 +7,7 @@ package org.easy4j.framework.bean;
 
 /**
  * 返回数据对象
+ * JSON格式
  */
 public class Data {
     /**
@@ -14,7 +15,13 @@ public class Data {
      */
     private Object model;
 
+    public Data() {
+    }
     public Data(Object model) {
+        this.model = model;
+    }
+
+    public void setModel(Object model) {
         this.model = model;
     }
 

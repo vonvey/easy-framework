@@ -125,4 +125,12 @@ public final class ServletHelper {
     public static void invalidateSession() {
         getRequest().getSession().invalidate();
     }
+
+    public static HttpServletResponse getServletResponse() {
+        return getResponse();
+    }
+
+    public static HttpServletRequest getServletRequest() {
+        return getRequest();
+    }
 }
