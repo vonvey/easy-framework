@@ -1,5 +1,7 @@
 package org.easy4j.framework.http;
 
+import com.sun.tools.doclets.internal.toolkit.util.DocFinder;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -62,6 +64,12 @@ public class HttpClient {
                 writer.close();
             }
 
+            //处理文件类型
+            if (requestFile != null) {
+                FileInputStream fis = new FileInputStream(requestFile);
+
+            }
+
             response.setResponseCode(huc.getResponseCode());
             response.setResponseMessage(huc.getResponseMessage());
             //设置响应header
@@ -77,11 +85,15 @@ public class HttpClient {
             response.setResponseHeaders(headerMap);
 
             //处理body
+            //目前只能处理不压缩的
             String contentEncoding = huc.getContentEncoding();
+            if (contentEncoding != null) {
+                System.out.println(contentEncoding);
+            }
 
             String contentType = huc.getContentType();
             long contentLength = huc.getContentLengthLong();
-            if (contentType.startsWith("text")) {
+            if (contentType.startsWith("text/")) {
                 //字节流转化成字符流
                 InputStream is;
                 try {
@@ -94,9 +106,9 @@ public class HttpClient {
                 Reader reader = new InputStreamReader(is);
                 StringBuilder sb = new StringBuilder();
 
-                int bufferLength = 1024;
-                char[] data = new char[bufferLength];
                 if (contentLength > 0 ) {
+                    int bufferLength = 1024;
+                    char[] data = new char[bufferLength];
                     int readLength = (bufferLength > contentLength) ? (int) contentLength : bufferLength;
                     int length;
                     while ((length = reader.read(data, 0, readLength)) != -1) {
@@ -120,13 +132,35 @@ public class HttpClient {
 
                 //关闭连接
                 huc.disconnect();
-            } else { //其他类型
+            } else { //其他类型,当成文件处理, 下载下来
+                if (contentLength == -1) {
+                    throw new IOException("content-length is -1");
+                }
 
+                String fileName = u.getFile();
+                fileName = fileName.substring(fileName.lastIndexOf("/") + 1);
+                FileOutputStream fos = new FileOutputStream(fileName);
+                BufferedInputStream bis = new BufferedInputStream(huc.getInputStream());
+                int bufferLength = 1024;
+                byte[] buffer = new byte[bufferLength];
+                int readLength = (bufferLength > contentLength) ? (int) contentLength : bufferLength;
+                int length;
+                while ((length = bis.read(buffer, 0, readLength)) != -1) {
+                    fos.write(buffer, 0, length);
+                    contentLength -= length;
+                    if (contentLength <= 0) {
+                        break;
+                    }
+                    readLength = (bufferLength > contentLength) ? (int) contentLength : bufferLength;
+                }
+
+                bis.close();
+                fos.close();
             }
         } catch (MalformedURLException e) {
-
+            e.printStackTrace();
         } catch (IOException e) {
-
+            e.printStackTrace();
         } finally {
 
         }

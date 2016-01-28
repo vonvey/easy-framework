@@ -15,7 +15,7 @@ public class HttpResponse {
 
     private Map<String, String> responseHeaderMap;
 
-    private Object responseBody;
+    private Object responseBody = "";
 
     public int getResponseCode() {
         return responseCode;
